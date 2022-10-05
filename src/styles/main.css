@@ -1,0 +1,35 @@
+body {
+    padding: 0;
+    margin: 0;
+    width: 300px;
+}
+
+#main {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px;
+    gap: 20px;
+    box-sizing: border-box;
+}
+
+.setting {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+}
+
+h1 {
+    font-size: 22px;
+    font-family: Helvetica, sans-serif;
+    color: #10a37f;
+    font-weight: bold;
+    width: 100%;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
