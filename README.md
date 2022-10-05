@@ -30,7 +30,8 @@ To start using the extension do the following:
 
 4. Head to GMail and enjoy
 
-https://user-images.githubusercontent.com/24496843/193957808-db4d3e49-9158-42c5-82cb-73b1e6dc0db1.mov
+
+https://user-images.githubusercontent.com/24496843/194149908-acdf93c8-854f-472a-80ed-8cc61f86a05e.mov
 
 ## Usage
 
