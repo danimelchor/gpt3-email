@@ -1,5 +1,13 @@
 const getConfig = async () => {
-    return await chrome.storage.sync.get([
+    const {
+        apiKey,
+        model,
+        temperature,
+        maxTokens,
+        topP,
+        frequencyPenalty,
+        presencePenalty,
+    } = await chrome.storage.sync.get([
         "apiKey",
         "model",
         "temperature",
@@ -8,6 +16,16 @@ const getConfig = async () => {
         "frequencyPenalty",
         "presencePenalty",
     ]);
+
+    return {
+        apiKey: apiKey || "",
+        model: model || "text-davinci-002",
+        temperature: temperature || 0.7,
+        maxTokens: maxTokens || 256,
+        topP: topP || 1,
+        frequencyPenalty: frequencyPenalty || 0,
+        presencePenalty: presencePenalty || 0,
+    };
 };
 
 const getNextTokens = async (prompt, suffix) => {
@@ -50,7 +68,12 @@ const getNextTokens = async (prompt, suffix) => {
     });
 
     const json = await res.json();
-    return json.choices[0].text;
+
+    if (json.error) {
+        return { error: json.error };
+    }
+
+    return { text: json.choices[0].text };
 };
 
 chrome.runtime.onMessage.addListener(async (request) => {

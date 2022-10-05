@@ -39,6 +39,7 @@ const createButton = async () => {
     button.style.left = "10px";
     button.style.zIndex = 1000;
     button.id = "generate-button";
+    button.classList.add("generate-button");
 
     // Add image inside button
     const img = document.createElement("img");
@@ -69,17 +70,38 @@ const getAllEditable = () => {
 
 const setButtonLoading = () => {
     const button = document.getElementById("generate-button");
-    button.innerHTML = "Loading...";
-    button.style.padding = "5px 10px";
+    button.innerHTML = "<div class='spinner'></div>";
+
+    // Remove all classes
+    button.classList.remove("generate-button-error");
+
+    // add loading class to button
+    button.classList.add("generate-button-loading");
+};
+
+const setButtonError = (err) => {
+    const button = document.getElementById("generate-button");
+    console.log(err);
+    button.innerHTML = err;
+
+    // Remove all classes
+    button.classList.remove("generate-button-loading");
+
+    // Add error class to button
+    button.classList.add("generate-button-error");
 };
 
 const setButtonLoaded = () => {
     const button = document.getElementById("generate-button");
+
+    // Remove all classes
+    button.classList.remove("generate-button-loading");
+    button.classList.remove("generate-button-error");
+
+    // Add image inside button
     const img = document.createElement("img");
-    button.innerHTML = "";
-    button.style.padding = "5px";
     img.src = chrome.runtime.getURL("images/logo.png");
-    img.style.pointerEvents = "none";
+    button.innerHTML = "";
     button.appendChild(img);
 };
 
@@ -109,7 +131,11 @@ document.body.addEventListener("scroll", deleteButton);
 // Listen for messages from the background script
 chrome.runtime.onMessage.addListener((request) => {
     if (request.generate) {
-        setButtonLoaded();
-        insertText(request.generate);
+        if (request.generate.error) {
+            setButtonError(request.generate.error.message);
+        } else if (request.generate.text) {
+            insertText(request.generate.text);
+            setButtonLoaded();
+        }
     }
 });

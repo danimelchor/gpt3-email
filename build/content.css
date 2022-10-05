@@ -1,4 +1,4 @@
-#generate-button {
+.generate-button {
     background: #10a37f;
     border-radius: 100px;
     color: white;
@@ -13,16 +13,45 @@
     transition: all 100ms ease-in-out;
 }
 
-#generate-button:hover {
+.generate-button:hover {
     background: #0f8e6c;
     box-shadow: 0 0 0px 3px #dedede;
 }
 
-#generate-button:focus {
+.generate-button:focus {
     outline: none;
 }
 
-#generate-button img {
+.generate-button img {
     width: 17px;
     height: 17px;
+    pointer-events: none;
+}
+
+.generate-button-error {
+    background: rgb(205, 86, 86);
+    padding: 5px 10px;
+}
+
+.generate-button-error:hover {
+    background: rgb(166, 67, 67);
+}
+
+.generate-button-loading .spinner {
+    width: 13px;
+    height: 13px;
+    border: 3px solid white;
+    border-left-color: transparent;
+    border-right-color: transparent;
+    border-radius: 100%;
+    animation: rotate 1s linear infinite;
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
