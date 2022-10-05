@@ -1,5 +1,5 @@
 const getConfig = async () => {
-    const res = await chrome.storage.sync.get([
+    return await chrome.storage.sync.get([
         "apiKey",
         "model",
         "temperature",
@@ -8,11 +8,12 @@ const getConfig = async () => {
         "frequencyPenalty",
         "presencePenalty",
     ]);
-    return res;
 };
 
 const getNextTokens = async (prompt, suffix) => {
     const url = "https://api.openai.com/v1/completions";
+
+    // Get config from storage
     const {
         apiKey,
         model,
@@ -23,6 +24,7 @@ const getNextTokens = async (prompt, suffix) => {
         presencePenalty,
     } = await getConfig();
 
+    // Create request body
     const data = {
         prompt: prompt,
         suffix: suffix || null,
@@ -33,10 +35,14 @@ const getNextTokens = async (prompt, suffix) => {
         frequency_penalty: frequencyPenalty,
         presence_penalty: presencePenalty,
     };
+
+    // Create headers
     const headers = {
         "Content-Type": "application/json",
         Authorization: "Bearer " + apiKey,
     };
+
+    // Make request
     const res = await fetch(url, {
         method: "POST",
         headers: headers,
@@ -49,8 +55,11 @@ const getNextTokens = async (prompt, suffix) => {
 
 chrome.runtime.onMessage.addListener(async (request) => {
     if (request.text != null) {
+        // Communicate with content script to get the current text
         const [prompt, suffix] = request.text;
         const nextTokens = await getNextTokens(prompt, suffix);
+
+        // Communicate with content script to update the text
         chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
             chrome.tabs.sendMessage(tabs[0].id, { generate: nextTokens });
         });
