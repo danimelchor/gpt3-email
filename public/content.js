@@ -22,12 +22,13 @@ const insertText = (text) => {
         }
     }
 
+    // Split text by separator
     var prev_txt = LAST_ACTIVE_EL.innerHTML;
     var spl_prev_txt = prev_txt.split(SEP);
 
+    // Insert text
     const before = spl_prev_txt[0];
     const after = spl_prev_txt[1] || "";
-
     LAST_ACTIVE_EL.innerHTML = before + res + after;
 };
 
