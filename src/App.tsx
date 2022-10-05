@@ -38,6 +38,7 @@ function App() {
     };
 
     useEffect(() => {
+        // Load all available models from GPT-3 API
         if (loaded) {
             fetch("https://api.openai.com/v1/models", {
                 headers: {
@@ -59,6 +60,7 @@ function App() {
     }, [config.apiKey, loaded]);
 
     useEffect(() => {
+        // Load config from chrome storage
         // @ts-ignore
         chrome.storage.sync.get(
             [
@@ -92,6 +94,7 @@ function App() {
                 text="API Key"
                 onChange={(n) => updateConfig("apiKey", n)}
                 value={config.apiKey}
+                isPassword={true}
             />
             {loggedIn && (
                 <>
