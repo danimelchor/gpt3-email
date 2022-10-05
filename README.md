@@ -10,11 +10,7 @@ Head to [OpenAI's](https://openai.com/api/) website and obtain your API key.
 
 Once the setup script has finished running, you need to follow these steps:
 
-1. Build the extension with:
-
-```
-yarn build
-```
+1. (Optional) Re-build the extension with `yarn build`
 
 2. Go to your browsers extension page (e.g. [chrome://extensions/](chrome://extensions/))
 

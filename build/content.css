@@ -1,0 +1,28 @@
+#generate-button {
+    background: #10a37f;
+    border-radius: 100px;
+    color: white;
+    padding: 5px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    transform: translateY(-100%);
+    transition: all 100ms ease-in-out;
+}
+
+#generate-button:hover {
+    background: #0f8e6c;
+    box-shadow: 0 0 0px 3px #dedede;
+}
+
+#generate-button:focus {
+    outline: none;
+}
+
+#generate-button img {
+    width: 17px;
+    height: 17px;
+}
