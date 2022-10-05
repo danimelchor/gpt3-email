@@ -18,6 +18,8 @@ type ConfigState = {
 
 function App() {
     const [models, setModels] = useState<string[]>(["text-davinci-002"]);
+    const [loggedIn, setLoggedIn] = useState(true);
+    const [loaded, setLoaded] = useState(false);
     const [config, setConfig] = useState<ConfigState>({
         apiKey: "",
         model: "text-davinci-002",
@@ -36,17 +38,23 @@ function App() {
     };
 
     useEffect(() => {
-        fetch("https://api.openai.com/v1/models", {
-            headers: {
-                Authorization: `Bearer ${config.apiKey}`,
-            },
-        })
-            .then((res) => res.json())
-            .then((res) => {
-                const data = res.data || ["text-davinci-002"];
-                setModels(data.map((a: any) => a.id));
-            });
-    }, [config.apiKey]);
+        if (loaded) {
+            fetch("https://api.openai.com/v1/models", {
+                headers: {
+                    Authorization: `Bearer ${config.apiKey}`,
+                },
+            })
+                .then((res) => res.json())
+                .then((res) => {
+                    if (res.error) {
+                        setLoggedIn(false);
+                        return;
+                    }
+                    setModels(res.data.map((a: any) => a.id));
+                    setLoggedIn(true);
+                });
+        }
+    }, [config.apiKey, loaded]);
 
     useEffect(() => {
         // @ts-ignore
@@ -70,6 +78,7 @@ function App() {
                     frequencyPenalty: res.frequencyPenalty || 0.0,
                     presencePenalty: res.presencePenalty || 0.0,
                 });
+                setLoaded(true);
             }
         );
     }, []);
@@ -82,51 +91,55 @@ function App() {
                 onChange={(n) => updateConfig("apiKey", n)}
                 value={config.apiKey}
             />
-            <Select
-                text="Model"
-                onChange={(n) => updateConfig("model", n)}
-                value={config.model}
-                options={models}
-            />
-            <Slider
-                text="Temperature"
-                onChange={(n) => updateConfig("temperature", n)}
-                min={0}
-                max={1}
-                value={config.temperature}
-                step={0.01}
-            />
-            <Slider
-                text="Top P"
-                onChange={(n) => updateConfig("topP", n)}
-                min={0}
-                max={1}
-                value={config.topP}
-                step={0.01}
-            />
-            <Slider
-                text="Max tokens"
-                onChange={(n) => updateConfig("maxTokens", n)}
-                min={1}
-                max={4000}
-                value={config.maxTokens}
-            />
-            <Slider
-                text="Frequency penalty"
-                onChange={(n) => updateConfig("frequencyPenalty", n)}
-                min={0}
-                max={2}
-                value={config.frequencyPenalty}
-                step={0.01}
-            />
-            <Slider
-                text="Presence penalty"
-                onChange={(n) => updateConfig("presencePenalty", n)}
-                min={0}
-                max={2}
-                value={config.presencePenalty}
-                step={0.01}
-            />
+            {loggedIn && (
+                <>
+                    <Select
+                        text="Model"
+                        onChange={(n) => updateConfig("model", n)}
+                        value={config.model}
+                        options={models}
+                    />
+                    <Slider
+                        text="Temperature"
+                        onChange={(n) => updateConfig("temperature", n)}
+                        min={0}
+                        max={1}
+                        value={config.temperature}
+                        step={0.01}
+                    />
+                    <Slider
+                        text="Top P"
+                        onChange={(n) => updateConfig("topP", n)}
+                        min={0}
+                        max={1}
+                        value={config.topP}
+                        step={0.01}
+                    />
+                    <Slider
+                        text="Max tokens"
+                        onChange={(n) => updateConfig("maxTokens", n)}
+                        min={1}
+                        max={4000}
+                        value={config.maxTokens}
+                    />
+                    <Slider
+                        text="Frequency penalty"
+                        onChange={(n) => updateConfig("frequencyPenalty", n)}
+                        min={0}
+                        max={2}
+                        value={config.frequencyPenalty}
+                        step={0.01}
+                    />
+                    <Slider
+                        text="Presence penalty"
+                        onChange={(n) => updateConfig("presencePenalty", n)}
+                        min={0}
+                        max={2}
+                        value={config.presencePenalty}
+                        step={0.01}
+                    />
+                </>
+            )}
         </div>
     );
 }
