@@ -10,13 +10,19 @@ Head to [OpenAI's](https://openai.com/api/) website and obtain your API key.
 
 Once the setup script has finished running, you need to follow these steps:
 
-1. Go to your browsers extension page (e.g. [chrome://extensions/](chrome://extensions/))
+1. Build the extension with:
 
-2. Click on the `load unpacked` button
+```
+yarn build
+```
 
-3. Select the newly generated `build` folder
+2. Go to your browsers extension page (e.g. [chrome://extensions/](chrome://extensions/))
 
-4. Good to go!
+3. Click on the `load unpacked` button
+
+4. Select the newly generated `build` folder
+
+5. Good to go!
 
 ### 3. Paste your API key
 
@@ -26,10 +32,9 @@ To start using the extension do the following:
 
 2. Paste your key on the key field
 
-3. Adjust the number of max tokens
+3. Configure the extension as desired
 
-4. Head to GMail and enjoy
-
+4. Head to gmail and enjoy
 
 https://user-images.githubusercontent.com/24496843/194149908-acdf93c8-854f-472a-80ed-8cc61f86a05e.mov
 

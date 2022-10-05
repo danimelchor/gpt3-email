@@ -1,5 +1,9 @@
 {
-  "name": "gpt3-email-react",
+  "author": {
+    "name": "Daniel Melchor",
+    "email": "dmh672@gmail.com"
+  },
+  "name": "gpt3-email",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
