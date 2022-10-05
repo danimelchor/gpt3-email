@@ -50,7 +50,9 @@ function App() {
                         setLoggedIn(false);
                         return;
                     }
-                    setModels(res.data.map((a: any) => a.id));
+                    const model_ids = res.data.map((a: any) => a.id);
+                    const sorted = model_ids.sort();
+                    setModels(sorted);
                     setLoggedIn(true);
                 });
         }
