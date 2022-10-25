@@ -12,12 +12,14 @@
     "storage"
   ],
   "host_permissions": [
-    "https://mail.google.com/*"
+    "https://mail.google.com/*",
+    "https://outlook.office.com/*"
   ],
   "content_scripts": [
     {
       "matches": [
-        "https://mail.google.com/*"
+        "https://mail.google.com/*",
+        "https://outlook.office.com/*"
       ],
       "css": [
         "content.css"
@@ -33,7 +35,8 @@
         "images/logo.png"
       ],
       "matches": [
-        "https://mail.google.com/*"
+        "https://mail.google.com/*",
+        "https://outlook.office.com/*"
       ]
     }
   ],
