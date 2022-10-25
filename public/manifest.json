@@ -13,13 +13,15 @@
   ],
   "host_permissions": [
     "https://mail.google.com/*",
-    "https://outlook.office.com/*"
+    "https://outlook.office.com/*",
+    "https://app.fastmail.com/*"
   ],
   "content_scripts": [
     {
       "matches": [
         "https://mail.google.com/*",
-        "https://outlook.office.com/*"
+        "https://outlook.office.com/*",
+        "https://app.fastmail.com/*"
       ],
       "css": [
         "content.css"
@@ -36,7 +38,8 @@
       ],
       "matches": [
         "https://mail.google.com/*",
-        "https://outlook.office.com/*"
+        "https://outlook.office.com/*",
+        "https://app.fastmail.com/*"
       ]
     }
   ],
