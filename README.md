@@ -14,11 +14,13 @@ Once the setup script has finished running, you need to follow these steps:
 
 2. Go to your browsers extension page (e.g. [chrome://extensions/](chrome://extensions/))
 
-3. Click on the `load unpacked` button
+3. Toggle to activate `Developer Mode`  on top right
 
-4. Select the newly generated `build` folder
+4. Click on the `load unpacked` button
 
-5. Good to go!
+5. Select the newly generated `build` folder
+
+6. Good to go!
 
 ### 3. Paste your API key
 
