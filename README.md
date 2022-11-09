@@ -48,4 +48,4 @@ https://user-images.githubusercontent.com/24496843/193957303-927762c0-4af4-4684-
 
 ## Donations
 
-If you want to support me, you can donate me on [PayPal](https://paypal.me/danimelchor)
+If you enjoy my work, please donate [here](https://paypal.me/danimelchor)
