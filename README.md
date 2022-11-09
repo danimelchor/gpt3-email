@@ -14,7 +14,7 @@ Once the setup script has finished running, you need to follow these steps:
 
 2. Go to your browsers extension page (e.g. [chrome://extensions/](chrome://extensions/))
 
-3. Toggle to activate `Developer Mode`  on top right
+3. Toggle to activate `Developer Mode` on top right
 
 4. Click on the `load unpacked` button
 
@@ -45,3 +45,7 @@ https://user-images.githubusercontent.com/24496843/193957293-565973ae-cc94-4489-
 ### Text insertion
 
 https://user-images.githubusercontent.com/24496843/193957303-927762c0-4af4-4684-ad35-c19216b5dea8.mov
+
+## Donations
+
+If you want to support me, you can donate me on [PayPal](https://paypal.me/danimelchor)
