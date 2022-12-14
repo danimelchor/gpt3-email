@@ -1,7 +1,7 @@
 {
-  "author": "Cedric Gilissen",
-  "version": "0.1.0",
-  "description": "Write compelling emails with your personal AI writing assistant. Create touching emails, context-specific replies and summarize emails in seconds.",
+  "author": "Cedric & Wim",
+  "version": "0.0.1",
+  "description": "AI email assistant",
   "manifest_version": 3,
   "name": "Meet Wonka",
   "background": {
@@ -30,7 +30,7 @@
   "web_accessible_resources": [
     {
       "resources": [
-        "images/logo-popup.png"
+        "images/logo.png"
       ],
       "matches": [
         "https://mail.google.com/*"
@@ -39,16 +39,16 @@
   ],
   "action": {
     "default_icon": {
-      "16": "images/logo-popup.png",
-      "24": "images/logo-popup.png",
-      "32": "images/logo-popup.png"
+      "16": "images/popup-logo.png",
+      "24": "images/popup-logo.png",
+      "32": "images/popup-logo.png"
     },
     "default_popup": "index.html"
   },
   "icons": {
-    "16": "images/logo-popup.png",
-    "32": "images/logo-popup.png",
-    "48": "images/logo-popup.png",
-    "128": "images/logo-popup.png"
+    "16": "images/popup-logo.png",
+    "32": "images/popup-logo.png",
+    "48": "images/popup-logo.png",
+    "128": "images/popup-logo.png"
   }
 }

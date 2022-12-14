@@ -1,9 +1,9 @@
 {
-  "author": "Daniel Melchor",
-  "version": "1.0.0",
-  "description": "GPT-3 Autocomplete for GMail",
+  "author": "Cedric & Wim",
+  "version": "0.0.1",
+  "description": "AI email assistant",
   "manifest_version": 3,
-  "name": "GTP3Mail",
+  "name": "Meet Wonka",
   "background": {
     "service_worker": "background.js"
   },
