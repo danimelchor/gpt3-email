@@ -109,8 +109,6 @@ const createElement = async () => {
     button9.innerHTML = 'WRITE';
     button9.classList.add('button');
     button9.classList.add('write-button');
-    
-
   
     // Add the buttons to the div
     div.appendChild(button1);
@@ -204,7 +202,7 @@ const setButtonLoaded = () => {
 
 const handleClick = (e) => {
     // If element is GPT-3 button, do nothing
-    if (e.target.id == "generate-button") {
+    if (e.target.id == "promptbox") {
         return;
     }
 
