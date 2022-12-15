@@ -32,20 +32,20 @@ const insertText = (text) => {
     LAST_ACTIVE_EL.innerHTML = before + res + after;
 };
 
-const createButton = async () => {
-    // Create button
-    const button = document.createElement("button");
-    button.style.top = LAST_ACTIVE_EL.offsetHeight + "px";
-    button.style.left = "10px";
-    button.style.zIndex = 1000;
-    button.id = "generate-button";
-    button.classList.add("generate-button");
+const createElement = async () => {
+    // Create element
+    const div = document.createElement("div");
+    div.style.top = LAST_ACTIVE_EL.offsetHeight + "px";
+    div.style.left = "10px";
+    div.style.zIndex = 1000;
+    div.id = "generate-div";
+    div.classList.add("generate-div");
 
-    // Add image inside button
-    const img = document.createElement("img");
-    img.src = chrome.runtime.getURL("images/logo.png");
-    img.style.pointerEvents = "none";
-    button.appendChild(img);
+    //Add buttons inside div
+    //const img = document.createElement("img");
+    //img.src = chrome.runtime.getURL("images/logo-popup.png");
+    //img.style.pointerEvents = "none";
+    //button.appendChild(img);
 
     // Add onclick event
     button.addEventListener("click", () => {
@@ -100,7 +100,7 @@ const setButtonLoaded = () => {
 
     // Add image inside button
     const img = document.createElement("img");
-    img.src = chrome.runtime.getURL("images/logo.png");
+    img.src = chrome.runtime.getURL("images/logo-popup.png");
     button.innerHTML = "";
     button.appendChild(img);
 };

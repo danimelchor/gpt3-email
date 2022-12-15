@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      .button-container {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        padding: 2px;
+        gap: 4px;
+      }
+      .button-container button {
+        font-size: 16px;
+        height: 32px;
+        padding: 4px 8px;
+        border-radius: 8px;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+        }
+        .button-container button:nth-child(-n+10) {
+
+        background-color: #2b2d40;
+        opacity: 0.33;
+      }
+      .button-container button:nth-child(-n+10):hover {
+
+  background-color: #2b2d40;
+  opacity: 0.66;
+}
+.button-container button:nth-child(-n+10):active {
+
+  background-color: #2b2d40;
+  opacity: 1;
+  pointer-events:none;
+}
+      .button-container button:last-child {
+  background-color: #DC3C44;
+  color: white;
+  flex: none;
+  font-weight: bold;
+  font-family: "Poppins", sans-serif;
+}
+.button-container .divider {
+  width: 4px;
+  height: 100%;
+  background-color: black;
+  border-radius: 8px;
+}
+
+    </style>
+  </head>
+  <body>
+    <div class="button-container">
+      <button onclick="this.classList.add('clicked')">👍</button>
+      <button>👎</button>
+      <div class="divider"></div>
+      <button>🙎‍♂️</button>
+      <button>🧑‍💻</button>
+      <div class="divider"></div>
+      <button>🤩</button>
+      <button>🙂</button>
+      <button>🥺</button>
+      <button>🙄</button>
+      <div class="divider"></div>
+      <button>WRITE</button>
+</div>

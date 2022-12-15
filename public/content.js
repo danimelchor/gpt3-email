@@ -32,23 +32,108 @@ const insertText = (text) => {
     LAST_ACTIVE_EL.innerHTML = before + res + after;
 };
 
-const createButton = async () => {
-    // Create button
-    const button = document.createElement("button");
-    button.style.top = LAST_ACTIVE_EL.offsetHeight + "px";
-    button.style.left = "10px";
-    button.style.zIndex = 1000;
-    button.id = "generate-button";
-    button.classList.add("generate-button");
+const createElement = async () => {
+    // Create button wrapper
+    const div = document.createElement("div");
+    div.style.top = LAST_ACTIVE_EL.offsetHeight + "px";
+    div.style.left = "10px";
+    div.style.zIndex = 1000;
+    div.style.width = "32px";
+    div.style.height = "32px";
+    div.style.display = 'flex';
+    div.style.flexDirection = 'row';
+    div.style.alignItems = 'flex-start';
+    div.style.padding = '2px';
+    div.style.gap = '4px';
+    div.id = "generate-div";
+    div.classList.add("generate-div");
 
-    // Add image inside button
-    const img = document.createElement("img");
-    img.src = chrome.runtime.getURL("images/logo.png");
-    img.style.pointerEvents = "none";
-    button.appendChild(img);
+    //Add buttons inside div
+    const button1 = document.createElement('button');
+    button1.innerHTML = '👍';
+    button1.classList.add('button');
+    button1.classList.add('emoji-button');
+
+    const button2 = document.createElement('button');
+    button2.innerHTML = '👎';
+    button2.classList.add('button');
+    button2.classList.add('emoji-button');
+
+    const divider1 = document.createElement('div');
+    divider1.classList.add('divider');
+
+    const button3 = document.createElement('button');
+    button3.innerHTML = '🙎‍♂️';
+    button3.classList.add('button');
+    button3.classList.add('emoji-button');
+
+    const button4 = document.createElement('button');
+    button4.innerHTML = '🧑‍💻';
+    button4.classList.add('button');
+    button4.classList.add('emoji-button');
+
+    const divider2 = document.createElement('div');
+    divider2.classList.add('divider');
+    
+
+    const button5 = document.createElement('button');
+    button5.innerHTML = '🤩';
+    button5.classList.add('button');
+    button5.classList.add('emoji-button');
+
+    const button6 = document.createElement('button');
+    button6.innerHTML = '🙂';
+    button6.classList.add('button');
+    button6.classList.add('emoji-button');
+
+    const button7 = document.createElement('button');
+    button7.innerHTML = '🥺';
+    button7.classList.add('button');
+    button7.classList.add('emoji-button');
+
+    const button8 = document.createElement('button');
+    button8.innerHTML = '🙄';
+    button8.classList.add('button');
+    button8.classList.add('emoji-button');
+
+    const divider3 = document.createElement('div');
+    divider3.classList.add('divider');
+
+    const button9 = document.createElement('button');
+    button9.innerHTML = 'WRITE';
+    button9.classList.add('button');
+    button9.classList.add('write-button');
+    
+
+  
+    // Add the buttons to the div
+    div.appendChild(button1);
+    div.appendChild(button2);
+    div.appendChild(divider1);
+    div.appendChild(button3);
+    div.appendChild(button4);
+    div.appendChild(divider2);
+    div.appendChild(button5);
+    div.appendChild(button6);
+    div.appendChild(button7);
+    div.appendChild(button8);
+    div.appendChild(divider3);
+    div.appendChild(button9);
+
+// get a reference to the buttons
+const buttons = document.querySelectorAll('.div button');
+
+// add a click event listener to each button
+buttons.forEach((button) => {
+  button.addEventListener('click', () => {
+    // toggle the clicked class on the button
+    button.classList.toggle('clicked');
+  });
+});
+
 
     // Add onclick event
-    button.addEventListener("click", () => {
+    button1.addEventListener("click", () => {
         const text = extractText();
         LAST_ACTIVE_EL.focus();
         setButtonLoading();
@@ -56,7 +141,7 @@ const createButton = async () => {
     });
 
     // Append button to parent of input
-    LAST_ACTIVE_EL.parentNode.appendChild(button);
+    LAST_ACTIVE_EL.parentNode.appendChild(div);
 };
 
 const deleteButton = () => {
@@ -100,7 +185,7 @@ const setButtonLoaded = () => {
 
     // Add image inside button
     const img = document.createElement("img");
-    img.src = chrome.runtime.getURL("images/logo.png");
+    img.src = chrome.runtime.getURL("images/logo-popup.png");
     button.innerHTML = "";
     button.appendChild(img);
 };
@@ -117,7 +202,7 @@ const handleClick = (e) => {
         if (div.contains(e.target)) {
             deleteButton();
             LAST_ACTIVE_EL = div;
-            createButton();
+            createElement();
             break;
         }
     }

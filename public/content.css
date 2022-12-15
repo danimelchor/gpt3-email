@@ -55,3 +55,61 @@
         transform: rotate(360deg);
     }
 }
+
+
+
+    /* apply this style to buttons 1-8 */
+    div .button {
+        /* styles for buttons 1-8 */
+        font-size: 16px;
+        height: 32px;
+        padding: 4px 8px;
+        border-radius: 8px;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+      }
+
+    /* apply this style to buttons 1-8 */
+    div .emoji-button {
+        /* styles for buttons 1-8 */
+        background-color: #2b2d40;
+        opacity: 0.33;
+      }
+      
+        /* apply this style only to the ninth button */
+        div .write-button {
+        /* styles for the ninth button */
+        background-color: #DC3C44;
+        color: white;
+        flex: none;
+        font-weight: bold;
+        font-family: "Poppins", sans-serif;
+
+
+      }
+
+    /* apply this style when the button is hovered over */
+    div .emoji-button:hover {
+    opacity: 0.66;  /* set the button's opacity to 0.66 when hovered over */
+  }
+
+      /* apply this style when the button is clicked */
+      div .emoji-button:hover {
+        opacity: 1.0;  /* set the button's opacity to 1 when active */
+      }
+  
+        /* apply this style to divider */
+        div .divider {
+        /* styles for divider */
+        width: 4px;
+        height: 100%;
+        background-color: black;
+        border-radius: 8px;
+        
+      }
+      /* apply this style when the button has the clicked class */
+.button-container button.clicked {
+    opacity: 1;  /* set the button's opacity to 1 when the clicked class is present */
+  }
+  
