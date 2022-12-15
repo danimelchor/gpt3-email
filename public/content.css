@@ -109,7 +109,7 @@
         
       }
       /* apply this style when the button has the clicked class */
-.button-container button.clicked {
+div button.clicked {
     opacity: 1;  /* set the button's opacity to 1 when the clicked class is present */
   }
   

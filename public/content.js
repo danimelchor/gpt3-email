@@ -1,6 +1,5 @@
 // Define a variable and a constant
 var LAST_ACTIVE_EL = null;
-const SEP = "[insert]";
 
 // Takes the text from the gmail box
 const extractText = () => {
@@ -10,39 +9,34 @@ const extractText = () => {
     txt = txt.replace(/(\s)+/g, "$1");
     // Remove leading and trailing whitespace
     txt = txt.trim();
-    // Split the text at the SEP separator, resulting in an array of two substrings
-    txt = txt.split(SEP);
-    // Return the array of substrings
-    return [txt[0], txt[1] || ""];
-};
+    // Return the entire text as a single string
+    return txt;
+  };
 
 // Insert text as HTML
 const insertText = (text) => {
-     // Split the text at newline characters
+    // Get the entire text from the Gmail box
+    const txt = extractText();
+  
+    // Split the text at newline characters
     const spl_text = text.split("\n");
     // Define a variable to hold the resulting HTML string
     var res = "";
-
-    // Further formatiing of the HTML
+  
+    // Further formatting of the HTML
     for (const s of spl_text) {
-        if (s == "") {
-            // Add a white line if there is no text
-            res += "<div><br></div>";
-        } else {
-            // Add the text if there is text
-            res += "<div>" + s + "</div>";
-        }
+      if (s == "") {
+        // Add a white line if there is no text
+        res += "<div><br></div>";
+      } else {
+        // Add the text if there is text
+        res += "<div>" + s + "</div>";
+      }
     }
-
-    // Split text by separator
-    var prev_txt = LAST_ACTIVE_EL.innerHTML;
-    var spl_prev_txt = prev_txt.split(SEP);
-
-    // Insert text
-    const before = spl_prev_txt[0];
-    const after = spl_prev_txt[1] || "";
-    LAST_ACTIVE_EL.innerHTML = before + res + after;
-};
+  
+    // Insert text at the beginning or end of the existing text in the Gmail box
+    LAST_ACTIVE_EL.innerHTML = txt + res;
+  };
 
 const createElement = async () => {
     // Create button wrapper
