@@ -1,23 +1,35 @@
+// Define a variable and a constant
 var LAST_ACTIVE_EL = null;
 const SEP = "[insert]";
 
+// Takes the text from the gmail box
 const extractText = () => {
+    // Define a variable to hold the extracted text
     var txt = LAST_ACTIVE_EL.innerText;
+    // Replace any consecutive whitespace characters with a single space
     txt = txt.replace(/(\s)+/g, "$1");
+    // Remove leading and trailing whitespace
     txt = txt.trim();
+    // Split the text at the SEP separator, resulting in an array of two substrings
     txt = txt.split(SEP);
+    // Return the array of substrings
     return [txt[0], txt[1] || ""];
 };
 
+// Insert text as HTML
 const insertText = (text) => {
-    // Insert text as HTML
+     // Split the text at newline characters
     const spl_text = text.split("\n");
+    // Define a variable to hold the resulting HTML string
     var res = "";
 
+    // Further formatiing of the HTML
     for (const s of spl_text) {
         if (s == "") {
+            // Add a white line if there is no text
             res += "<div><br></div>";
         } else {
+            // Add the text if there is text
             res += "<div>" + s + "</div>";
         }
     }
@@ -132,30 +144,34 @@ buttons.forEach((button) => {
 });
 
 
-    // Add onclick event
-    button1.addEventListener("click", () => {
+    // Add onclick event for the write button
+    button9.addEventListener("click", () => {
+        // Call extract function
         const text = extractText();
         LAST_ACTIVE_EL.focus();
+        // TODO Need to make a new animation for this
         setButtonLoading();
+        // This sends the text to the OpenAI
         chrome.runtime.sendMessage({ text });
     });
 
     // Append button to parent of input
     LAST_ACTIVE_EL.parentNode.appendChild(div);
 };
-
+//Why would you remove the button? Because you will change it with the loading one? 
 const deleteButton = () => {
     const button = document.getElementById("generate-button");
     if (button != null) button.remove();
 };
 
+// What is the use of this piece of the text?
 const getAllEditable = () => {
     return document.querySelectorAll("div[contenteditable=true]");
 };
-
+//changed this to button 9 to see if it works on my button
 const setButtonLoading = () => {
-    const button = document.getElementById("generate-button");
-    button.innerHTML = "<div class='spinner'></div>";
+    const button9 = document.getElementById("generate-button");
+    button9.innerHTML = "<div class='spinner'></div>";
 
     // Remove all classes
     button.classList.remove("generate-button-error");
