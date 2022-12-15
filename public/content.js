@@ -51,8 +51,8 @@ const createElement = async () => {
     div.style.alignItems = 'flex-start';
     div.style.padding = '2px';
     div.style.gap = '4px';
-    div.id = "generate-div";
-    div.classList.add("generate-div");
+    div.id = "promptbox";
+    div.classList.add("promptbox");
 
     //Add buttons inside div
     const button1 = document.createElement('button');
@@ -126,16 +126,16 @@ const createElement = async () => {
     div.appendChild(divider3);
     div.appendChild(button9);
 
-// get a reference to the buttons
-const buttons = document.querySelectorAll('.div button');
+    // get a reference to the buttons
+    const buttons = document.querySelectorAll('.div button');
 
-// add a click event listener to each button
-buttons.forEach((button) => {
-  button.addEventListener('click', () => {
-    // toggle the clicked class on the button
-    button.classList.toggle('clicked');
-  });
-});
+    // add a click event listener to each button
+    buttons.forEach((button) => {
+        button.addEventListener('click', () => {
+            // toggle the clicked class on the button
+            button.classList.toggle('clicked');
+        });
+    });
 
 
     // Add onclick event for the write button
@@ -152,9 +152,10 @@ buttons.forEach((button) => {
     // Append button to parent of input
     LAST_ACTIVE_EL.parentNode.appendChild(div);
 };
+
 //Why would you remove the button? Because you will change it with the loading one? 
 const deleteButton = () => {
-    const button = document.getElementById("generate-button");
+    const button = document.getElementById("promptbox");
     if (button != null) button.remove();
 };
 
@@ -162,6 +163,7 @@ const deleteButton = () => {
 const getAllEditable = () => {
     return document.querySelectorAll("div[contenteditable=true]");
 };
+
 //changed this to button 9 to see if it works on my button
 const setButtonLoading = () => {
     const button9 = document.getElementById("generate-button");
