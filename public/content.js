@@ -151,7 +151,7 @@ const createElement = async () => {
     LAST_ACTIVE_EL.parentNode.appendChild(div);
 };
 
-//Why would you remove the button? Because you will change it with the loading one? 
+// Deletes the prompt box
 const deleteButton = () => {
     const button = document.getElementById("promptbox");
     if (button != null) button.remove();
@@ -210,8 +210,10 @@ const handleClick = (e) => {
     const editableDivs = getAllEditable();
     for (const div of editableDivs) {
         if (div.contains(e.target)) {
+            // deletes all other prompt boxes
             deleteButton();
             LAST_ACTIVE_EL = div;
+            // creates a new prompt box
             createElement();
             break;
         }
