@@ -38,7 +38,7 @@ const insertText = (text) => {
     LAST_ACTIVE_EL.innerHTML = txt + res;
   };
 
-  const emailBox = document.querySelector('.tbody');
+const emailBox = document.querySelector('.tbody');
 
 const createElement = async () => {
     // Create button wrapper
@@ -223,7 +223,7 @@ const handleClick = (e) => {
     }
 };
 
-document.emailBox.addEventListener("focus", createElement);
+emailBox.addEventListener("focus", createElement);
 
 // Add event listeners
 document.body.addEventListener("click", handleClick);
