@@ -38,10 +38,13 @@ const insertText = (text) => {
     LAST_ACTIVE_EL.innerHTML = txt + res;
   };
 
+  const emailBox = document.getElementById(":pu");
+
 const createElement = async () => {
     // Create button wrapper
     const div = document.createElement("div");
-    div.style.top = LAST_ACTIVE_EL.offsetHeight + "px";
+    div.style.position = "fixed";
+    div.style.top = "10px";
     div.style.left = "10px";
     div.style.zIndex = 1000;
     div.style.width = "32px";
@@ -219,6 +222,8 @@ const handleClick = (e) => {
         }
     }
 };
+
+document.emailBox.addEventListener("focus", createElement);
 
 // Add event listeners
 document.body.addEventListener("click", handleClick);
