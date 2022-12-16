@@ -38,7 +38,7 @@ const insertText = (text) => {
     LAST_ACTIVE_EL.innerHTML = txt + res;
   };
 
-  const emailBox = document.getElementById(":pu");
+  const emailBox = document.querySelector('.tbody');
 
 const createElement = async () => {
     // Create button wrapper
