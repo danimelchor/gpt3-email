@@ -30,7 +30,8 @@
   "web_accessible_resources": [
     {
       "resources": [
-        "images/logo-popup.png"
+        "images/logo-popup.png",
+        "promptbox.html"
       ],
       "matches": [
         "https://mail.google.com/*"

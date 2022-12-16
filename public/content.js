@@ -36,122 +36,15 @@ const insertText = (text) => {
   
     // Insert text at the beginning or end of the existing text in the Gmail box
     LAST_ACTIVE_EL.innerHTML = txt + res;
-  };
+};
 
-const emailBox = document.querySelector('.tbody');
-
-const createElement = async () => {
-    // Create button wrapper
-    const div = document.createElement("div");
-    div.style.position = "fixed";
-    div.style.top = "10px";
-    div.style.left = "10px";
-    div.style.zIndex = 1000;
-    div.style.width = "32px";
-    div.style.height = "32px";
-    div.style.display = 'flex';
-    div.style.flexDirection = 'row';
-    div.style.alignItems = 'flex-start';
-    div.style.padding = '2px';
-    div.style.gap = '4px';
-    div.id = "promptbox";
-    div.classList.add("promptbox");
-
-    //Add buttons inside div
-    const button1 = document.createElement('button');
-    button1.innerHTML = '👍';
-    button1.classList.add('button');
-    button1.classList.add('emoji-button');
-
-    const button2 = document.createElement('button');
-    button2.innerHTML = '👎';
-    button2.classList.add('button');
-    button2.classList.add('emoji-button');
-
-    const divider1 = document.createElement('div');
-    divider1.classList.add('divider');
-
-    const button3 = document.createElement('button');
-    button3.innerHTML = '🙎‍♂️';
-    button3.classList.add('button');
-    button3.classList.add('emoji-button');
-
-    const button4 = document.createElement('button');
-    button4.innerHTML = '🧑‍💻';
-    button4.classList.add('button');
-    button4.classList.add('emoji-button');
-
-    const divider2 = document.createElement('div');
-    divider2.classList.add('divider');
-    
-
-    const button5 = document.createElement('button');
-    button5.innerHTML = '🤩';
-    button5.classList.add('button');
-    button5.classList.add('emoji-button');
-
-    const button6 = document.createElement('button');
-    button6.innerHTML = '🙂';
-    button6.classList.add('button');
-    button6.classList.add('emoji-button');
-
-    const button7 = document.createElement('button');
-    button7.innerHTML = '🥺';
-    button7.classList.add('button');
-    button7.classList.add('emoji-button');
-
-    const button8 = document.createElement('button');
-    button8.innerHTML = '🙄';
-    button8.classList.add('button');
-    button8.classList.add('emoji-button');
-
-    const divider3 = document.createElement('div');
-    divider3.classList.add('divider');
-
-    const button9 = document.createElement('button');
-    button9.innerHTML = 'WRITE';
-    button9.classList.add('button');
-    button9.classList.add('write-button');
-  
-    // Add the buttons to the div
-    div.appendChild(button1);
-    div.appendChild(button2);
-    div.appendChild(divider1);
-    div.appendChild(button3);
-    div.appendChild(button4);
-    div.appendChild(divider2);
-    div.appendChild(button5);
-    div.appendChild(button6);
-    div.appendChild(button7);
-    div.appendChild(button8);
-    div.appendChild(divider3);
-    div.appendChild(button9);
-
-    // get a reference to the buttons
-    const buttons = document.querySelectorAll('.div button');
-
-    // add a click event listener to each button
-    buttons.forEach((button) => {
-        button.addEventListener('click', () => {
-            // toggle the clicked class on the button
-            button.classList.toggle('clicked');
-        });
-    });
-
-
-    // Add onclick event for the write button
-    button9.addEventListener("click", () => {
-        // Call extract function
-        const text = extractText();
-        LAST_ACTIVE_EL.focus();
-        // TODO Need to make a new animation for this
-        setButtonLoading();
-        // This sends the text to the OpenAI
-        chrome.runtime.sendMessage({ text });
-    });
-
-    // Append button to parent of input
-    LAST_ACTIVE_EL.parentNode.appendChild(div);
+const createPromptBox = async () => {
+    fetch(chrome.runtime.getURL("promptbox.html")).then(res=>res.text()).then(promptboxHTML => {
+        // Append table to parent of input
+        var promptboxTemplate = document.createElement('template')
+        promptboxTemplate.innerHTML = promptboxHTML.trim()
+        promptboxElement = LAST_ACTIVE_EL.parentNode.appendChild(promptboxTemplate.content.firstChild)
+    })
 };
 
 // Deletes the prompt box
@@ -203,13 +96,40 @@ const setButtonLoaded = () => {
     button.appendChild(img);
 };
 
-const handleClick = (e) => {
-    // If element is GPT-3 button, do nothing
-    if (e.target.id == "promptbox") {
+const handlePromptBoxClick = (e) => {
+    console.log(e)
+    // DIT WERKT NIET....
+    if (e.target.classList.contains("emoji-button")){
+        // toggle the clicked class on the button
+        target.classList.toggle('clicked');
+        console.log(`Button Clicked, state was ${target.classList}"`)
         return;
     }
 
-    // If element is in editable parent, create button
+    // DIT OOK NIET....
+    if (e.target.classList.contains("write-button"))
+    document.getElementById("write-button").addEventListener("click", () => {
+        // Call extract function
+        const text = extractText();
+        LAST_ACTIVE_EL.focus();
+        // TODO Need to make a new animation for this
+        setButtonLoading();
+        // This sends the text to the OpenAI
+        chrome.runtime.sendMessage({ text });
+    });
+}
+
+const handleClick = (e) => {
+    // WHY DOES THIS LOG THE PARENT TABLE INSTEAD OF THE BUTTON ITSELF????
+    console.log(e.target)
+    // If element is any element within the promptbox, do nothing
+    if (e.target.closest('#promptbox') != null) {
+        console.log(`Somewhere within promptbox clicked`)
+        handlePromptBoxClick(e)
+        return;
+    }
+
+    // If element is in editable parent, create a new promptbox
     const editableDivs = getAllEditable();
     for (const div of editableDivs) {
         if (div.contains(e.target)) {
@@ -217,13 +137,11 @@ const handleClick = (e) => {
             deleteButton();
             LAST_ACTIVE_EL = div;
             // creates a new prompt box
-            createElement();
+            createPromptBox();
             break;
         }
     }
 };
-
-emailBox.addEventListener("focus", createElement);
 
 // Add event listeners
 document.body.addEventListener("click", handleClick);
