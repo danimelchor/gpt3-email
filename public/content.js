@@ -1,10 +1,10 @@
-// Define a variable and a constant
-var LAST_ACTIVE_EL = null;
+// Define a global variable pointing to the active email div
+var ACTIVE_EMAIL_DIV = null;
 
 // Takes the text from the gmail box
 const extractText = () => {
     // Define a variable to hold the extracted text
-    var txt = LAST_ACTIVE_EL.innerText;
+    var txt = ACTIVE_EMAIL_DIV.innerText;
     // Replace any consecutive whitespace characters with a single space
     txt = txt.replace(/(\s)+/g, "$1");
     // Remove leading and trailing whitespace
@@ -25,7 +25,7 @@ const insertText = (text) => {
 
     // Further formatting of the HTML
     for (const s of spl_text) {
-        if (s == "") {
+        if (s === "") {
             // Add a white line if there is no text
             res += "<div><br></div>";
         } else {
@@ -35,14 +35,14 @@ const insertText = (text) => {
     }
 
     // Insert text at the beginning or end of the existing text in the Gmail box
-    LAST_ACTIVE_EL.innerHTML = txt + res;
+    ACTIVE_EMAIL_DIV.innerHTML = txt + res;
 };
 
 const createPromptBox = async () => {
     fetch(chrome.runtime.getURL("promptbox.html")).then(res => res.text()).then(promptboxHTML => {
         var promptbox = new DOMParser().parseFromString(promptboxHTML, "text/html").body.childNodes[0]
-        promptboxElement = LAST_ACTIVE_EL.parentNode.appendChild(promptbox)
-        promptboxElement.style.top = (LAST_ACTIVE_EL.offsetHeight - promptboxElement.offsetHeight)+ "px"
+        var promptboxElement = ACTIVE_EMAIL_DIV.parentNode.appendChild(promptbox)
+        promptboxElement.style.top = (ACTIVE_EMAIL_DIV.offsetHeight - promptboxElement.offsetHeight) + "px"
         promptboxElement.style.zIndex = 1000
     })
 };
@@ -53,47 +53,41 @@ const deleteButton = () => {
     if (button != null) button.remove();
 };
 
-// What is the use of this piece of the text?
+// Gets all Email Boxes
 const getAllEditable = () => {
     return document.querySelectorAll("div[contenteditable=true]");
 };
 
 //changed this to button 9 to see if it works on my button
-const setButtonLoading = () => {
-    const button9 = document.getElementById("generate-button");
-    button9.innerHTML = "<div class='spinner'></div>";
+const setWriteButtonLoading = (writeButton) => {
+    writeButton.innerHTML = "Loading";
 
     // Remove all classes
-    button.classList.remove("generate-button-error");
+    writeButton.classList.remove("write-button-error");
 
     // add loading class to button
-    button.classList.add("generate-button-loading");
+    writeButton.classList.add("write-button-loading");
 };
 
-const setButtonError = (err) => {
-    const button = document.getElementById("generate-button");
-    console.log(err);
-    button.innerHTML = err;
+const setWriteButtonError = () => {
+    const button = document.getElementById("write-button");
+    button.innerHTML = "Error";
 
     // Remove all classes
-    button.classList.remove("generate-button-loading");
+    button.classList.remove("write-button-loading");
 
     // Add error class to button
-    button.classList.add("generate-button-error");
+    button.classList.add("write-button-error");
 };
 
-const setButtonLoaded = () => {
-    const button = document.getElementById("generate-button");
+const setWriteButtonLoaded = () => {
+    const button = document.getElementById("write-button");
 
     // Remove all classes
-    button.classList.remove("generate-button-loading");
-    button.classList.remove("generate-button-error");
+    button.classList.remove("write-button-loading");
+    button.classList.remove("write-button-error");
 
-    // Add image inside button
-    const img = document.createElement("img");
-    img.src = chrome.runtime.getURL("images/logo-popup.png");
-    button.innerHTML = "";
-    button.appendChild(img);
+    button.innerHTML = "WRITE"
 };
 
 const handlePromptBoxClick = (e) => {
@@ -102,31 +96,36 @@ const handlePromptBoxClick = (e) => {
         return;
     }
 
-    if (e.target.classList.contains("write-button"))
-        document.getElementById("write-button").addEventListener("click", () => {
-            // Call extract function
-            const text = extractText();
-            LAST_ACTIVE_EL.focus();
-            // TODO Need to make a new animation for this
-            setButtonLoading();
-            // This sends the text to the OpenAI
-            chrome.runtime.sendMessage({ text });
-        });
+    if (e.target.classList.contains("write-button")) {
+        // Call extract function
+        const text = extractText();
+        console.log(text);
+
+        ACTIVE_EMAIL_DIV.focus();
+        // TODO Need to make a new animation for this
+        setWriteButtonLoading(e.target);
+        // This sends the text to the OpenAI
+        chrome.runtime.sendMessage({ text });
+    }
 }
 
 const handleClick = (e) => {
-    // If element is any element within the promptbox, do nothing
-    if (e.target.closest('#promptbox') != null) {
-        handlePromptBoxClick(e)
-    } else {
-        // If element is in editable parent, create a new promptbox
-        const editableDivs = getAllEditable();
-        for (const div of editableDivs) {
-            if (div.contains(e.target)) {
-                if(div.parentNode.querySelector('#promptbox') == null){
-                    LAST_ACTIVE_EL = div;
-                    createPromptBox();
-                }
+    const editableDivs = getAllEditable();
+    for (const div of editableDivs) {
+        if (div.parentElement.contains(e.target)) {
+            // change to active Email Box
+            ACTIVE_EMAIL_DIV = div;
+
+            // If target is inside a promptbox, handle the promptbox click
+            if (e.target.closest('#promptbox') != null) {
+                handlePromptBoxClick(e)
+                return;
+            }
+
+            // If element is in editable parent without promptbox, create a new promptbox
+            if (div.parentNode.querySelector('#promptbox') == null) {
+                createPromptBox();
+                return;
             }
         }
     }
@@ -141,10 +140,12 @@ document.body.addEventListener("scroll", deleteButton);
 chrome.runtime.onMessage.addListener((request) => {
     if (request.generate) {
         if (request.generate.error) {
-            setButtonError(request.generate.error.message);
+            setWriteButtonError();
+            console.error(request.generate.error.message);
+            insertText(request.generate.error.message);
         } else if (request.generate.text) {
             insertText(request.generate.text);
-            setButtonLoaded();
+            setWriteButtonLoaded();
         }
     }
 });

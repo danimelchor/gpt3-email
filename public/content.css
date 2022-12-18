@@ -1,62 +1,91 @@
 .button-container {
-    position: absolute;
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    padding: 2px;
-    gap: 4px;
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 2px;
+  gap: 4px;
+}
+
+.button-container button {
+  font-size: 16px;
+  height: 32px;
+  padding: 4px 8px;
+  border-radius: 8px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+/* apply this style only to the ninth button */
+div .write-button {
+  /* styles for the ninth button */
+  background-color: #DC3C44;
+  color: white;
+  flex: none;
+  font-weight: bold;
+  font-family: "Poppins", sans-serif;
+}
+
+/* apply this style to buttons 1-8 */
+div .emoji-button {
+  /* styles for buttons 1-8 */
+  background-color: #2b2d40;
+  opacity: 0.33;
+}
+
+/* apply this style when the button is hovered over */
+div .emoji-button:hover {
+  opacity: 0.66;
+  /* set the button's opacity to 0.66 when hovered over */
+}
+
+/* apply this style when the button is currently being clicked on */
+div .emoji-button:active {
+  opacity: 1;
+  /* set the button's opacity to 0.66 when hovered over */
+}
+
+/* apply this style when the button has the clicked class */
+div .emoji-button.clicked {
+  opacity: 1;
+  /* set the button's opacity to 1 when the clicked class is present */
+}
+
+/* apply this style to divider */
+div .divider {
+  /* styles for divider */
+  width: 4px;
+  height: 100%;
+  background-color: black;
+  border-radius: 8px;
+}
+
+.write-button-error {
+  background: rgb(205, 86, 86);
+  padding: 5px 10px;
+}
+
+.write-button-error:hover {
+  background: rgb(166, 67, 67);
+}
+
+.write-button-loading .spinner {
+  width: 13px;
+  height: 13px;
+  border: 3px solid white;
+  border-left-color: transparent;
+  border-right-color: transparent;
+  border-radius: 100%;
+  animation: rotate 1s linear infinite;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
   }
-  
-  .button-container button {
-    font-size: 16px;
-    height: 32px;
-    padding: 4px 8px;
-    border-radius: 8px;
-    font-size: 16px;
-    border: none;
-    cursor: pointer;
+
+  100% {
+    transform: rotate(360deg);
   }
-  
-  /* apply this style only to the ninth button */
-  div .write-button {
-    /* styles for the ninth button */
-    background-color: #DC3C44;
-    color: white;
-    flex: none;
-    font-weight: bold;
-    font-family: "Poppins", sans-serif;
-  }
-  
-  /* apply this style to buttons 1-8 */
-  div .emoji-button {
-    /* styles for buttons 1-8 */
-    background-color: #2b2d40;
-    opacity: 0.33;
-  }
-  
-  /* apply this style when the button is hovered over */
-  div .emoji-button:hover {
-    opacity: 0.66;
-    /* set the button's opacity to 0.66 when hovered over */
-  }
-  
-  /* apply this style when the button is currently being clicked on */
-  div .emoji-button:active {
-    opacity: 1;
-    /* set the button's opacity to 0.66 when hovered over */
-  }
-  
-  /* apply this style when the button has the clicked class */
-  div .emoji-button.clicked {
-    opacity: 1;
-    /* set the button's opacity to 1 when the clicked class is present */
-  }
-  
-  /* apply this style to divider */
-  div .divider {
-    /* styles for divider */
-    width: 4px;
-    height: 100%;
-    background-color: black;
-    border-radius: 8px;
-  }
+}
