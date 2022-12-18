@@ -11,39 +11,39 @@ const extractText = () => {
     txt = txt.trim();
     // Return the entire text as a single string
     return txt;
-  };
+};
 
 // Insert text as HTML
 const insertText = (text) => {
     // Get the entire text from the Gmail box
     const txt = extractText();
-  
+
     // Split the text at newline characters
     const spl_text = text.split("\n");
     // Define a variable to hold the resulting HTML string
     var res = "";
-  
+
     // Further formatting of the HTML
     for (const s of spl_text) {
-      if (s == "") {
-        // Add a white line if there is no text
-        res += "<div><br></div>";
-      } else {
-        // Add the text if there is text
-        res += "<div>" + s + "</div>";
-      }
+        if (s == "") {
+            // Add a white line if there is no text
+            res += "<div><br></div>";
+        } else {
+            // Add the text if there is text
+            res += "<div>" + s + "</div>";
+        }
     }
-  
+
     // Insert text at the beginning or end of the existing text in the Gmail box
     LAST_ACTIVE_EL.innerHTML = txt + res;
 };
 
 const createPromptBox = async () => {
-    fetch(chrome.runtime.getURL("promptbox.html")).then(res=>res.text()).then(promptboxHTML => {
-        // Append table to parent of input
-        var promptboxTemplate = document.createElement('template')
-        promptboxTemplate.innerHTML = promptboxHTML.trim()
-        promptboxElement = LAST_ACTIVE_EL.parentNode.appendChild(promptboxTemplate.content.firstChild)
+    fetch(chrome.runtime.getURL("promptbox.html")).then(res => res.text()).then(promptboxHTML => {
+        var promptbox = new DOMParser().parseFromString(promptboxHTML, "text/html").body.childNodes[0]
+        promptboxElement = LAST_ACTIVE_EL.parentNode.appendChild(promptbox)
+        promptboxElement.style.top = (LAST_ACTIVE_EL.offsetHeight - promptboxElement.offsetHeight)+ "px"
+        promptboxElement.style.zIndex = 1000
     })
 };
 
@@ -97,48 +97,37 @@ const setButtonLoaded = () => {
 };
 
 const handlePromptBoxClick = (e) => {
-    console.log(e)
-    // DIT WERKT NIET....
-    if (e.target.classList.contains("emoji-button")){
-        // toggle the clicked class on the button
-        target.classList.toggle('clicked');
-        console.log(`Button Clicked, state was ${target.classList}"`)
+    if (e.target.classList.contains("emoji-button")) {
+        e.target.classList.toggle('clicked');
         return;
     }
 
-    // DIT OOK NIET....
     if (e.target.classList.contains("write-button"))
-    document.getElementById("write-button").addEventListener("click", () => {
-        // Call extract function
-        const text = extractText();
-        LAST_ACTIVE_EL.focus();
-        // TODO Need to make a new animation for this
-        setButtonLoading();
-        // This sends the text to the OpenAI
-        chrome.runtime.sendMessage({ text });
-    });
+        document.getElementById("write-button").addEventListener("click", () => {
+            // Call extract function
+            const text = extractText();
+            LAST_ACTIVE_EL.focus();
+            // TODO Need to make a new animation for this
+            setButtonLoading();
+            // This sends the text to the OpenAI
+            chrome.runtime.sendMessage({ text });
+        });
 }
 
 const handleClick = (e) => {
-    // WHY DOES THIS LOG THE PARENT TABLE INSTEAD OF THE BUTTON ITSELF????
-    console.log(e.target)
     // If element is any element within the promptbox, do nothing
     if (e.target.closest('#promptbox') != null) {
-        console.log(`Somewhere within promptbox clicked`)
         handlePromptBoxClick(e)
-        return;
-    }
-
-    // If element is in editable parent, create a new promptbox
-    const editableDivs = getAllEditable();
-    for (const div of editableDivs) {
-        if (div.contains(e.target)) {
-            // deletes all other prompt boxes
-            deleteButton();
-            LAST_ACTIVE_EL = div;
-            // creates a new prompt box
-            createPromptBox();
-            break;
+    } else {
+        // If element is in editable parent, create a new promptbox
+        const editableDivs = getAllEditable();
+        for (const div of editableDivs) {
+            if (div.contains(e.target)) {
+                if(div.parentNode.querySelector('#promptbox') == null){
+                    LAST_ACTIVE_EL = div;
+                    createPromptBox();
+                }
+            }
         }
     }
 };

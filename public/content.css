@@ -1,65 +1,13 @@
-.generate-button {
-    background: #10a37f;
-    border-radius: 100px;
-    color: white;
-    padding: 5px;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.button-container {
     position: absolute;
-    transform: translateY(-100%);
-    transition: all 100ms ease-in-out;
-}
-
-.generate-button:hover {
-    background: #0f8e6c;
-    box-shadow: 0 0 0px 3px #dedede;
-}
-
-.generate-button:focus {
-    outline: none;
-}
-
-.generate-button img {
-    width: 17px;
-    height: 17px;
-    pointer-events: none;
-}
-
-.generate-button-error {
-    background: rgb(205, 86, 86);
-    padding: 5px 10px;
-}
-
-.generate-button-error:hover {
-    background: rgb(166, 67, 67);
-}
-
-.generate-button-loading .spinner {
-    width: 13px;
-    height: 13px;
-    border: 3px solid white;
-    border-left-color: transparent;
-    border-right-color: transparent;
-    border-radius: 100%;
-    animation: rotate 1s linear infinite;
-}
-
-@keyframes rotate {
-    0% {
-        transform: rotate(0deg);
-    }
-
-    100% {
-        transform: rotate(360deg);
-    }
-}
-
-/* apply this style to buttons 1-8 */
-div .button {
-    /* styles for buttons 1-8 */
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 2px;
+    gap: 4px;
+  }
+  
+  .button-container button {
     font-size: 16px;
     height: 32px;
     padding: 4px 8px;
@@ -67,100 +15,48 @@ div .button {
     font-size: 16px;
     border: none;
     cursor: pointer;
-}
-
-/* apply this style to buttons 1-8 */
-div .emoji-button {
-    /* styles for buttons 1-8 */
-    background-color: #2b2d40;
-    opacity: 0.33;
-}
-
-/* apply this style only to the ninth button */
-div .write-button {
+  }
+  
+  /* apply this style only to the ninth button */
+  div .write-button {
     /* styles for the ninth button */
     background-color: #DC3C44;
     color: white;
     flex: none;
     font-weight: bold;
     font-family: "Poppins", sans-serif;
-}
-
-/* apply this style when the button is hovered over */
-div .emoji-button:hover {
+  }
+  
+  /* apply this style to buttons 1-8 */
+  div .emoji-button {
+    /* styles for buttons 1-8 */
+    background-color: #2b2d40;
+    opacity: 0.33;
+  }
+  
+  /* apply this style when the button is hovered over */
+  div .emoji-button:hover {
     opacity: 0.66;
     /* set the button's opacity to 0.66 when hovered over */
-}
-
-/* apply this style when the button is clicked */
-div .emoji-button:hover {
-    opacity: 1.0;
-    /* set the button's opacity to 1 when active */
-}
-
-/* apply this style to divider */
-div .divider {
+  }
+  
+  /* apply this style when the button is currently being clicked on */
+  div .emoji-button:active {
+    opacity: 1;
+    /* set the button's opacity to 0.66 when hovered over */
+  }
+  
+  /* apply this style when the button has the clicked class */
+  div .emoji-button.clicked {
+    opacity: 1;
+    /* set the button's opacity to 1 when the clicked class is present */
+  }
+  
+  /* apply this style to divider */
+  div .divider {
     /* styles for divider */
     width: 4px;
     height: 100%;
     background-color: black;
     border-radius: 8px;
-}
-
-/* apply this style when the button has the clicked class */
-div button.clicked {
-    opacity: 1;
-    /* set the button's opacity to 1 when the clicked class is present */
-}
-
-.button-container {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    padding: 2px;
-    gap: 4px;
-}
-
-.button-container button {
-    font-size: 16px;
-    height: 32px;
-    padding: 4px 8px;
-    border-radius: 8px;
-    font-size: 16px;
-    border: none;
-    cursor: pointer;
-}
-
-.button-container button:nth-child(-n+10) {
-
-    background-color: #2b2d40;
-    opacity: 0.33;
-}
-
-.button-container button:nth-child(-n+10):hover {
-
-    background-color: #2b2d40;
-    opacity: 0.66;
-}
-
-.button-container button:nth-child(-n+10):active {
-
-    background-color: #2b2d40;
-    opacity: 1;
-    pointer-events: none;
-}
-
-.button-container button:last-child {
-    background-color: #DC3C44;
-    color: white;
-    flex: none;
-    font-weight: bold;
-    font-family: "Poppins", sans-serif;
-}
-
-.button-container .divider {
-    width: 4px;
-    height: 100%;
-    background-color: black;
-    border-radius: 8px;
-}
+  }
