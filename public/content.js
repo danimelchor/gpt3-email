@@ -41,9 +41,17 @@ const insertText = (text) => {
 const createPromptBox = async () => {
     fetch(chrome.runtime.getURL("promptbox.html")).then(res => res.text()).then(promptboxHTML => {
         var promptbox = new DOMParser().parseFromString(promptboxHTML, "text/html").body.childNodes[0]
-        var promptboxElement = ACTIVE_EMAIL_DIV.parentNode.appendChild(promptbox)
-        promptboxElement.style.top = (ACTIVE_EMAIL_DIV.offsetHeight - promptboxElement.offsetHeight) + "px"
-        promptboxElement.style.zIndex = 1000
+
+        // Add image to Write Button
+        const img = document.createElement("img");
+        img.src = chrome.runtime.getURL("images/Wonka-Logo-48x48.png")
+        promptbox.getElementsByClassName("write-button")[0].appendChild(img);
+
+        //add the promptbox
+        ACTIVE_EMAIL_DIV.parentNode.prepend(promptbox)
+
+        // Needs to be here to allow box to appear above all other elements
+        ACTIVE_EMAIL_DIV.classList.remove("aO9")
     })
 };
 
@@ -144,8 +152,9 @@ chrome.runtime.onMessage.addListener((request) => {
             console.error(request.generate.error.message);
             insertText(request.generate.error.message);
         } else if (request.generate.text) {
-            insertText(request.generate.text);
             setWriteButtonLoaded();
+            console.log(request.generate.text);
+            insertText(request.generate.text);
         }
     }
 });

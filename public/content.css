@@ -1,10 +1,14 @@
+.button-div{
+  display: block
+}
+
 .button-container {
-  position: absolute;
   display: flex;
   flex-direction: row;
   align-items: flex-start;
   padding: 2px;
   gap: 4px;
+  margin-bottom: 10px;
 }
 
 .button-container button {
@@ -15,16 +19,6 @@
   font-size: 16px;
   border: none;
   cursor: pointer;
-}
-
-/* apply this style only to the ninth button */
-div .write-button {
-  /* styles for the ninth button */
-  background-color: #DC3C44;
-  color: white;
-  flex: none;
-  font-weight: bold;
-  font-family: "Poppins", sans-serif;
 }
 
 /* apply this style to buttons 1-8 */
@@ -59,6 +53,18 @@ div .divider {
   height: 100%;
   background-color: black;
   border-radius: 8px;
+}
+
+
+/* apply this style only to the ninth button */
+.write-button {
+  /* styles for the ninth button */
+  flex: none;
+}
+
+.write-button > img {
+  width: 100%;
+  height: auto;
 }
 
 .write-button-error {
