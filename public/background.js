@@ -29,7 +29,7 @@ const getConfig = async () => {
 };
 
 const getNextTokens = async (prompt, suffix) => {
-    const url = "https://api.openai.com/v1/completions";
+    const url = "https://api.openai.com/v1/edit";
 
     // Get config from storage
     const {
