@@ -1,7 +1,21 @@
 // Define a global variable pointing to the active email div
 var ACTIVE_EMAIL_DIV = null;
 
+const handleWriteButtonClick = (e) => {
+    // Extract the text from the email
+    let { originalEmail, currentEmail } = extractText();
+    console.log(currentEmail);
+    const prompt = designPrompt(originalEmail, currentEmail, ACTIVE_EMAIL_DIV.getElementsByClassName("button-container")[0]);
+
+    ACTIVE_EMAIL_DIV.focus();
+    // TODO Need to make a new animation for this
+    setWriteButtonLoading(e.target);
+    // This sends the prompt to the OpenAI
+    chrome.runtime.sendMessage({ prompt });
+}
+
 // Takes the text from the gmail box
+// TODO: Extract originalEmail as well.
 const extractText = () => {
     // Define a variable to hold the extracted text
     var txt = ACTIVE_EMAIL_DIV.innerText;
@@ -10,8 +24,25 @@ const extractText = () => {
     // Remove leading and trailing whitespace
     txt = txt.trim();
     // Return the entire text as a single string
-    return txt;
+    return { originalEmail: ' ', currentEmail: txt };
 };
+
+const designPrompt = (originalEmail, currentEmail, promptbox) => {
+    /*
+    REMARK: This is where you can design the prompt Cédric. 
+    @params: 
+    * originalEmail: string representing the email you're replying to. empty string ("") if the email is the first in the chain.
+        REMARK: Currently only the "currentEmail" value will be populated, i have to find out how to retrieve the originalEmail
+        if it is not shown in the draft, and distinguish between current & original email if it is
+    * currentEmail: actual text representing the email you're currently writing (or maybe sometimes the prompt the user gives instead of actually writing the email?)
+    * promptbox: Element object containing the stateful promptbox
+    @returns: A string containing the prompt we will send to the API Endpoint!
+
+    @Cédric: You can use the promptbox variable to retreive the current state of the emojis. 
+    It's a good challenge for you on how to work with DOM Objects! Good luck :) :)
+    */
+    return "Write an email for me:";
+}
 
 // Insert text as HTML
 const insertText = (text) => {
@@ -48,12 +79,6 @@ const createPromptBox = async () => {
         // Needs to be here to allow box to appear above all other elements
         ACTIVE_EMAIL_DIV.classList.remove("aO9")
     })
-};
-
-// Deletes the prompt box
-const deleteButton = () => {
-    const button = document.getElementById("promptbox");
-    if (button != null) button.remove();
 };
 
 // Gets all Email Boxes
@@ -100,15 +125,7 @@ const handlePromptBoxClick = (e) => {
     }
 
     if (e.target.classList.contains("write-button")) {
-        // Call extract function
-        const text = extractText();
-        console.log(text);
-
-        ACTIVE_EMAIL_DIV.focus();
-        // TODO Need to make a new animation for this
-        setWriteButtonLoading(e.target);
-        // This sends the text to the OpenAI
-        chrome.runtime.sendMessage({ text });
+        handleWriteButtonClick()
     }
 }
 
@@ -136,8 +153,6 @@ const handleClick = (e) => {
 
 // Add event listeners
 document.body.addEventListener("click", handleClick);
-document.body.addEventListener("resize", deleteButton);
-document.body.addEventListener("scroll", deleteButton);
 
 // Listen for messages from the background script
 chrome.runtime.onMessage.addListener((request) => {
