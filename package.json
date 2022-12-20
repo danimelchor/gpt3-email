@@ -27,6 +27,9 @@
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
+    "env":{
+      "webextensions": true
+    },
     "extends": [
       "react-app",
       "react-app/jest"
