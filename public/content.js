@@ -42,11 +42,6 @@ const createPromptBox = async () => {
     fetch(chrome.runtime.getURL("promptbox.html")).then(res => res.text()).then(promptboxHTML => {
         var promptbox = new DOMParser().parseFromString(promptboxHTML, "text/html").body.childNodes[0]
 
-        // Add image to Write Button
-        const img = document.createElement("img");
-        img.src = chrome.runtime.getURL("images/Wonka-Logo-48x48.png")
-        promptbox.getElementsByClassName("write-button")[0].appendChild(img);
-
         //add the promptbox
         ACTIVE_EMAIL_DIV.parentNode.prepend(promptbox)
 

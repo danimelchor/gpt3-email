@@ -55,16 +55,14 @@ div .divider {
   border-radius: 8px;
 }
 
-
 /* apply this style only to the ninth button */
 .write-button {
   /* styles for the ninth button */
+  background-color: #DC3C44;
+  color: white;
   flex: none;
-}
-
-.write-button > img {
-  width: 100%;
-  height: auto;
+  font-weight: bold;
+  font-family: "Poppins", sans-serif;
 }
 
 .write-button-error {
